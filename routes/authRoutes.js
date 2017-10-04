@@ -8,9 +8,9 @@ module.exports = app => {
   app.get(
     '/auth/google/callback',
     passport.authenticate('google'),
-    (req,res) => {
+    /*(req,res) => {
       res.redirect('/forms');
-    }
+    }*/
   );
 
   app.get('/api/current_user',(req,res)=> {
