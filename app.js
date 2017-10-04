@@ -17,7 +17,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/authRoutes')(app);
 
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
