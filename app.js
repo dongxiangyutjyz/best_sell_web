@@ -66,7 +66,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/myforms",(req,res) => {
+/*app.get("/myforms",(req,res) => {
     user.find({'googleId' : user.id},function(err,users){
       if(err){
         res.send("something went really wrong");
@@ -74,7 +74,7 @@ app.get("/myforms",(req,res) => {
       }
       res.json(users);
     });
-});
+});*/
 
 app.post("/submit", requireLogin,(req, res) => {
   /*if (auth2.isSignedIn.get()) {
