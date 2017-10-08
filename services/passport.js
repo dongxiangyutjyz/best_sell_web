@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy(
     callbackURL: '/auth/google/callback',
   },
   (profile,done) => {
-    const existingUser = await User.findOne({ googleId: profile.id});
+    User.findOne({ googleId: profile.id}).then(existingUser => {
         if (existingUser) {
           //we already have a record with the given profile id
           done(null,existingUser);
@@ -32,4 +32,5 @@ passport.use(new GoogleStrategy(
         }
       }
     )
+  }
 );
