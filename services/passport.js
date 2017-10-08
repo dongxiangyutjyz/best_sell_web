@@ -20,7 +20,7 @@ passport.use(new GoogleStrategy(
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
   },
-  (profile,done) => {
+  (accessToken,refreshToken,profile,done) => {
     User.findOne({ googleId: profile.id}).then(existingUser => {
         if (existingUser) {
           //we already have a record with the given profile id
