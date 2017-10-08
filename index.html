@@ -1,16 +1,405 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Intro to Node and MongoDB</title>
-    </head>
+<head>
+  <meta name = "google-signin-client_id" content = "402904865547-p1877usppql16f9cdpu7rojf22qu766k.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<title>Page Title</title>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
-    <body>
-        <h1>Into to Node and MongoDB</h1>
-        <form method="post" action="/addname">
-            <label>Enter Your Name</label><br>
-            <input type="text" name="firstName" placeholder="Enter first name..." required>
-            <input type="text" name="lastName" placeholder="Enter last name..." required>
-            <input type="submit" value="Add Name">
-        </form>
-    </body>
+//colors
+$red: #E1332D;
+$white: #fff;
+
+//base styles
+
+* {
+  box-sizing: inherit;
+  transition-property: all;
+  transition-duration: .6s;
+  transition-timing-function: ease;
+}
+
+.form-style-5{
+    max-width: 500px;
+    padding: 10px 20px;
+    background: #f4f7f8;
+    margin: 10px auto;
+    padding: 20px;
+    background: #f4f7f8;
+    border-radius: 8px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+.form-style-5 fieldset{
+    border: none;
+}
+.form-style-5 legend {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+.form-style-5 label {
+    display: block;
+    margin-bottom: 8px;
+}
+.form-style-5 input[type="text"],
+.form-style-5 input[type="date"],
+.form-style-5 input[type="datetime"],
+.form-style-5 input[type="email"],
+.form-style-5 input[type="number"],
+.form-style-5 input[type="search"],
+.form-style-5 input[type="time"],
+.form-style-5 input[type="url"],
+.form-style-5 textarea,
+.form-style-5 select {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    background: rgba(255,255,255,.1);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 0;
+    outline: 0;
+    padding: 7px;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #e8eeef;
+    color:#8a97a0;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 30px;
+
+}
+.form-style-5 input[type="text"]:focus,
+.form-style-5 input[type="date"]:focus,
+.form-style-5 input[type="datetime"]:focus,
+.form-style-5 input[type="email"]:focus,
+.form-style-5 input[type="number"]:focus,
+.form-style-5 input[type="search"]:focus,
+.form-style-5 input[type="time"]:focus,
+.form-style-5 input[type="url"]:focus,
+.form-style-5 textarea:focus,
+.form-style-5 select:focus{
+    background: #d2d9dd;
+}
+.form-style-5 select{
+    -webkit-appearance: menulist-button;
+    height:35px;
+}
+.form-style-5 .number {
+    background: #1abc9c;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-right: 4px;
+    line-height: 30px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    border-radius: 15px 15px 15px 0px;
+}
+
+.form-style-5 input[type="submit"],
+.form-style-5 input[type="button"]
+{
+    position: relative;
+    display: block;
+    padding: 19px 39px 18px 39px;
+    color: #FFF;
+    margin: 0 auto;
+    background: #1abc9c;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    width: 100%;
+    border: 1px solid #16a085;
+    border-width: 1px 1px 3px;
+    margin-bottom: 10px;
+}
+.form-style-5 input[type="submit"]:hover,
+.form-style-5 input[type="button"]:hover
+{
+    background: #109177;
+}
+
+.form {
+  background-color: #84cdc8;
+  width:60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  padding-top:20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+
+.form h2 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+body {
+  margin:0;
+  padding:0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.nav {
+  background-color:#0abab5;
+  color: #000000;
+  list-style: none;
+  text-align: right;
+  padding:20px 0 0 0;
+  margin-top:0;
+}
+
+.nav > li {
+  display: inline-block;
+}
+
+.nav > li:nth-child(5) {
+  margin-right:20px;
+}
+
+.nav > li:nth-child(6) {
+  margin-right:15px;
+}
+
+.nav > li > a{
+  color:#fff;
+  font-size:18px;
+}
+
+.nav > li > a:hover{
+  background-color: #ffffff;
+  color: #009ac9;
+  border-color: #009ac9;
+  border-radius: 4px;
+}
+
+.nav > li > a {
+  margin: 0 auto;
+  font-size: 2.0rem;
+  padding: 1.25rem 2.5rem;
+  margin-bottom: 8px;
+  display: block;
+  background-color: #009ac9;
+  border: 1px solid transparent;
+  color: #ffffff;
+  font-weight: 300;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav > li > a:hover {
+  background-color: #ffffff;
+  color: #009ac9;
+  border-color: #009ac9;
+}
+
+
+.logo {
+  color: #000000;
+  float: left;
+  padding-left: 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.aboutUs {
+  text-align: center;
+  width:60%;
+  padding-top:10px;
+  padding-bottom:15px;
+  margin-top:40px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #98c0d7;
+  border-radius: 10px;
+}
+
+.aboutUs p {
+  width:50%;
+  margin-top:20px;
+  font-size: 18px;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.whyUs {
+  text-align: center;
+  width:60%;
+  padding-top:30px;
+  padding-bottom:50px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #c8b6d3;
+  border-radius: 10px;
+}
+
+.whyUs p {
+  width:60%;
+  margin-top:20px;
+  font-size: 18px;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.row {
+  background-color: #159588;
+  width:100%;
+  margin: 0 auto;
+  color: #FFFFFF;
+}
+
+.row .container {
+  width:80%;
+  margin: 0 auto;
+}
+
+.row .container .col1 {
+  width: 40%;
+  height:100%;
+  text-align: center;
+  display: inline-block;
+}
+
+.row .container .col2 {
+  width: 40%;
+  height:100%;
+  float:right;
+  text-align: right;
+  margin-top: 8%;
+  margin-bottom: 0;
+  display: inline-block;
+}
+</style>
+</head>
+<body>
+  <ul class="nav">
+    <div class="logo">
+      <a href="#">LOGO</a>
+    </div>
+    <li><a href="*" id="js-trigger-overlay" >Home</a></li>
+    <li><a href="#aboutUs" id="js-trigger-overlay">About Us</a></li>
+    <li><a href="#whyUs" id="js-trigger-overlay">Why Choose Us</a></li>
+    <li><a href="#form" id="js-trigger-overlay">Form</a></li>
+    <li id = "login"></li>
+  </ul>
+  <div id="msg"></div>
+  <div class = "aboutUs" id = "aboutUs">
+    <h2>About Us</h2>
+    <p>We are your trustworthy fellows. We are experienced since we have been selling our old phones and laptops online for years and get a good amount of money. We hope to help you sell your phone at the highest price as well.</p>
+  </div>
+  <div class = "whyUs" id = "whyUs">
+    <h2>Why Us</h2>
+    <p>I know you are all super busy and social lives, and you probably don't have time to write your description of your old phone, post it on eBay, check the enquires, bargain with the buyers, and deliver it from the post office. However, we can help you do all of this. We have done these by ourselves for years, and we have sold our phones and laptops at a much higher price than the trade in price. All you need to do is fill out the following form, and we will pick up your phone/laptop at your pickup time.</p>
+  </div>
+  <div class = "form" id = "form">
+    <h2>Form</h2>
+  <div class="form-style-5">
+    <form method="post" action="/submit" id="myForm">
+<fieldset>
+<legend><span class="number">1</span> Customer Info</legend>
+<input type="text" name="firstName" placeholder="Your First Name" require>
+<input type="text" name="lastName" placeholder="Your Last Name" >
+<input type="email" name="contact" placeholder="Your Email" >
+<input type="text" name="address" placeholder="Your Address on Campus" >
+</fieldset>
+<fieldset>
+<legend><span class="number">2</span> Product Info</legend>
+<label for="prodcut">Your product:</label>
+<select id="product" name="product" >
+<optgroup label="Phones">
+  <option value="iPhone">iPhone</option>
+  <option value="Google Pixel">Google Pixel</option>
+  <option value="Samsung">Samsung Galaxy</option>
+  <option value="other">Other</option>
+</optgroup>
+<optgroup label="Laptops">
+  <option value="Macbook Air">Macbook Air</option>
+  <option value="Macbook Pro">Macbook Pro</option>
+  <option value="Windows Surface">Windows Surface</option>
+</optgroup>
+</select>
+<label for="broken">Broken:</label>
+<select id="broken" name="broken" >
+  <option value="No">No</option>
+  <option value="Yes">Yes</option>
+</select>
+<input type="text" name="description" placeholder="Description (optional)">
+<label for="pickup">Pick Up Time:</label>
+<input type="date" name="date" >
+<input type="time" name="time">
+</fieldset>
+<input type="submit" value="Submit" >
+</form>
+</div>
+</div>
+<div class = row>
+  <div class = container>
+<footer>
+  <div class = col1>
+  <h4>Contact Us</h4>
+  <p>James Dong</p>
+  <p>Donglun He</p>
+</div>
+<div class = col2>
+<h4>All Rights Reserved</h4>
+</div>
+</footer>
+</div>
+</div>
+
+
+<script>
+(function() {
+      var po = document.createElement('script');
+      po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/client:plusone.js?onload=OnLoadCallback';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(po, s);
+})();
+function OnLoadCallback() {
+  sessionParams = {
+   'client_id': "402904865547-p1877usppql16f9cdpu7rojf22qu766k.apps.googleusercontent.com",
+   'session_state': null
+  };
+  gapi.auth.checkSessionState(sessionParams, function(stateMatched) {
+    var a = document.createElement("a");
+    var li = document.getElementById("login");
+    if (stateMatched == true) {
+      a.href = "/auth/google"
+      a.innerHTML="Log in";
+    } else {
+      a.href = "/api/logout"
+      a.innerHTML="Logged in with Google";
+    }
+    li.appendChild(a);
+  });
+}
+</script>
+
+<script>
+function clearAll() {
+  document.getElementById("myForm").reset();
+}
+</script>
+
+<script>
+$('a[href*=\\#]').on('click', function(event){
+    event.preventDefault();
+    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+});
+</script>
+
+</body>
 </html>
