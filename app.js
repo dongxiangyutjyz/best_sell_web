@@ -1,18 +1,14 @@
 const express = require("express");
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
 const cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 const keys = require('./config/keys');
-const passport = require('passport');
 const {BrowserRouter, Route} = require('react-router-dom');
 const React = require ('react');
 const {Component} = require('react');
 const { connect} = require ('react-redux');
 const GoogleStrategy = require('passport-google-oauth20');
-const requireLogin = require('./middlewares/requireLogin');
 require('./models/User');
-require('./services/passport');
 
 //authRoutes(app);
 const app = express();
@@ -23,18 +19,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(keys.mongoURI);
-
-app.use(
-  cookieSession({
-    maxAge: 30 * 24 * 60 *60 * 1000,
-    keys: [keys.cookieKey]
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('./routes/authRoutes')(app);
 
 //declare the model of a product in mongoose
 var productSchema = new mongoose.Schema({
@@ -47,11 +31,9 @@ var productSchema = new mongoose.Schema({
     time: String,
     description: String,
     broken: String,
-    googleId: String
 });
 //declare the model of a user in mongoose
 const userSchema = new mongoose.Schema({
-  googleId: String,
   children: [productSchema] //takes product as children
 });
 
@@ -83,7 +65,7 @@ app.post("/submit", (req, res) => {
     var profile = auth2.currentUser.get().getBasicProfile();
     console.log('ID: '+profile.getId());
   }*/
-    var myData = new user({children:req.body,googleId:user.id});
+    var myData = new user({children:req.body});
     myData.save()
         .then(item => {
             res.sendFile(path.resolve(__dirname,'aftersubmit.html'));
