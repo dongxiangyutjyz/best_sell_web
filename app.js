@@ -1,19 +1,11 @@
 const express = require("express");
 const mongoose = require('mongoose');
-const cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
-const keys = require('./config/keys');
-const {BrowserRouter, Route} = require('react-router-dom');
-const React = require ('react');
-const {Component} = require('react');
 const { connect} = require ('react-redux');
-const GoogleStrategy = require('passport-google-oauth20');
 require('./models/User');
 
 //authRoutes(app);
 const app = express();
-//Add
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,23 +40,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-//TODO:implement the function that allows logged in users to see forms they filled
-/*app.get("/myforms",(req,res) => {
-    user.find({'googleId' : user.id},function(err,users){
-      if(err){
-        res.send("something went really wrong");
-        next();
-      }
-      res.json(users);
-    });
-});*/
-
-//Require a user to log in first in order to send a
 app.post("/submit", (req, res) => {
-  /*if (auth2.isSignedIn.get()) {
-    var profile = auth2.currentUser.get().getBasicProfile();
-    console.log('ID: '+profile.getId());
-  }*/
     var myData = new user({children:req.body});
     myData.save()
         .then(item => {

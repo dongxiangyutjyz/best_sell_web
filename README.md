@@ -1,1 +1,1 @@
-# best_sell_web
+This website is a simple prototype of a react website in html. The app.js file links the html to the server at heroku and carries out the functions like get and post that allow the users to send a form to the MongoDB database. 
