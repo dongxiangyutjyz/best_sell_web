@@ -9,7 +9,6 @@ const {BrowserRouter, Route} = require('react-router-dom');
 const React = require ('react');
 const {Component} = require('react');
 const { connect} = require ('react-redux');
-const actions =require ('./actions');
 const GoogleStrategy = require('passport-google-oauth20');
 const requireLogin = require('./middlewares/requireLogin');
 require('./models/User');
@@ -37,6 +36,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 
+//declare the model of a product in mongoose
 var productSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
@@ -49,10 +49,10 @@ var productSchema = new mongoose.Schema({
     broken: String,
     googleId: String
 });
-
+//declare the model of a user in mongoose
 const userSchema = new mongoose.Schema({
   googleId: String,
-  children: [productSchema]
+  children: [productSchema] //takes product as children
 });
 
 mongoose.model('user',userSchema);
@@ -66,6 +66,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+//TODO:implement the function that allows logged in users to see forms they filled
 /*app.get("/myforms",(req,res) => {
     user.find({'googleId' : user.id},function(err,users){
       if(err){
@@ -76,7 +77,8 @@ app.get("/", (req, res) => {
     });
 });*/
 
-app.post("/submit", requireLogin,(req, res) => {
+//Require a user to log in first in order to send a
+app.post("/submit", (req, res) => {
   /*if (auth2.isSignedIn.get()) {
     var profile = auth2.currentUser.get().getBasicProfile();
     console.log('ID: '+profile.getId());
